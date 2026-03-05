@@ -48,5 +48,12 @@ git clone https://github.com/SasySpanish/NOAA-GSOD-Global-Weather-Analysis-with-
 
 
 ### Data license
-The NOAA GSOD dataset is public domain in the United States
+The NOAA GSOD dataset is public domain.
 .
+
+---
+
+## Author
+Developed by **[Salvatore Spagnuolo](https://github.com/SasySpanish)**  
+
+---
