@@ -29,7 +29,7 @@ This repository contains a Databricks notebook that:
 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/NOAA-GSOD-Global-Weather-Analysis-with-PySpark-on-Databricks.git
+git clone https://github.com/SasySpanish/NOAA-GSOD-Global-Weather-Analysis-with-PySpark-on-Databricks.git
 ```
 - Open Databricks (Community Edition or your organization workspace)
 - Import the .ipynb notebook located in the repository
