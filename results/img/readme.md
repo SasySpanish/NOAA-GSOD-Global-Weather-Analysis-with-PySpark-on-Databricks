@@ -31,16 +31,16 @@ Asia (AS) and North America (NA) show the highest variability year after year (~
 South America (SA) exhibits the lowest and most stable values (~2.5–3.0 °C).  
 No strong long-term trend in variability is visible over the decade.
 
-![Heatmap Variabilità Temperatura per Continente e Anno](C.%20heatmap%20Variabilità%20Temperatura%20continente%2014-24.png)
+![Heatmap Variabilità Temperatura per Continente e Anno](C.%20heatmap%20variabilità%20temperatura%20continente%2014-24.png)
 
-### 4. Top 10 Countries by Average Temperature in 2024
+### 4. Top 10 Cities by Average Temperature in 2024
 
 Horizontal bars ranking **countries** by mean temperature in 2024 (based on selected stations).
 
 Egypt leads (~26 °C), followed by Morocco and others.  
 The list includes countries from multiple continents, with a strong presence of warm African and subtropical locations.
 
-![Top10 Paesi per Temp Media 2024](P. top 10 paesi per temperatura media 14-24.png)
+![Top10 Paesi per Temp Media 2024](top%2010%20città%20temp%20media%2024.png)
 
 ### 5. Top 10 Hottest Cities in 2024
 
@@ -49,7 +49,7 @@ Bar chart of the **10 cities** with the highest annual mean temperature in 2024.
 Yola (Nigeria) tops the ranking at ~30 °C, followed by other tropical cities (Nigeria, India, Indonesia, Jamaica, Egypt, etc.).  
 Tropical and subtropical stations clearly dominate the hottest positions.
 
-![Top 10 Città Più Calde 2024](results/img/Top%2010%20città%20più%20calde%202024.png)
+![Top 10 Città Più Calde 2024](top10%20città%20più%20calde%202024.png)
 
 ### 6. Boxplot: Average Diurnal Temperature Range (Tmax – Tmin) per Country – Last 5 Years
 
@@ -59,7 +59,7 @@ Asia and North America frequently show the largest ranges (40–70 °C in contin
 South America and parts of Africa tend toward smaller ranges (20–40 °C).  
 Europe and Oceania are generally more moderate.
 
-![Escursione Termica Media per Paese – Ultimi 5 Anni](P.%20escursione%20termica%20per%20paese%20%last5y.png)
+![Escursione Termica Media per Paese – Ultimi 5 Anni](P.%20escursione%20termica%20per%20paese%20last5y.png)
 
 ### 7. Annual Average Temperature Trend per Continent (2014–2024)
 
@@ -74,7 +74,7 @@ The plot highlights clear differences in both level and trend among continents.
 
 ### 8. Top 10 Countries by Average Temperature – Year by Year (2014–2024)
 
-Multi-panel horizontal bar charts (one per year) showing the **top 10 cities** ranked by annual mean temperature each year.
+Multi-panel horizontal bar charts (one per year) showing the **top 10 countries** ranked by annual mean temperature each year.
 
 Tropical cities from Nigeria, Jamaica, Indonesia, El Salvador, India, Egypt, Mexico, Brazil and Tanzania repeatedly occupy the top positions.  
 Warmest annual averages frequently reach 28–32 °C in the leading cities.  
