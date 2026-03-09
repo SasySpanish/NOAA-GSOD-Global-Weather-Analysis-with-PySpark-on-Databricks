@@ -1,57 +1,72 @@
-# NOAA GSOD Global Weather Analysis with PySpark on Databricks
+## Global Weather Analysis Project
 
-Exploratory and statistical analysis of global historical weather data (2000–2024) using **NOAA Global Summary of the Day (GSOD)** dataset hosted on Amazon S3.
+This project explores global weather patterns using NOAA's Global Surface Summary of the Day (GSOD) dataset, processed entirely on **Databricks Community Edition** (free tier). It demonstrates a complete ETL and analytical workflow for handling historical weather data (2000–2024), focusing on temperature trends, precipitation extremes, and variability across continents, countries, and cities.
 
-<p>
-  <img src="https://img.shields.io/badge/Python-grey?style=for-the-badge&logo=python">
-  <img src="https://img.shields.io/badge/PySpark-orange?style=for-the-badge&logo=apache-spark">
-  <img src="https://img.shields.io/badge/Databricks-blue?style=for-the-badge&logo=databricks">
-  
-</p>
+### Data Ingestion from NOAA on Amazon S3
 
-## Project description
+The journey starts with ingesting raw daily weather summaries directly from NOAA's public S3 bucket (`s3://noaa-gsod-pds/`).  
+To stay within the free cluster's memory and compute limits, we avoided downloading the full archive and instead targeted a curated selection of **77 weather stations** worldwide.  
+Data was read using PySpark, parsed from gzipped fixed-width files, and immediately cleaned (missing values → null, Fahrenheit → Celsius conversion, basic quality filtering).
 
-This repository contains a Databricks notebook that:
+### Structured Division: 6 Continents → 5 Countries → 3 Cities
 
-- reliably reads daily NOAA GSOD CSV files directly from public S3 (`s3a://noaa-gsod-pds/`)
-- works with ~77 representative weather stations distributed across all continents
-- performs data cleaning, unit conversion (°F → °C), enrichment (seasons, macro-regions, anomalies vs 2000–2010 baseline)
-- computes aggregated statistics by city / year / season / continent
-- identifies climate trends, heatwaves, extreme rainfall periods, temperature anomalies
-- ranks locations (hottest cities, rainiest periods, most frost days, etc.)
-- creates interactive visualizations (Plotly) and static plots (Seaborn heatmaps)
+The dataset was intentionally divided into **six continents**:
 
-**Current focus**: global exploratory data analysis  
-**Planned next steps**: long-term trend detection, significant anomaly flagging, continental comparisons, lightweight predictive modeling
+- Europe
+- Asia
+- Africa
+- North America
+- South America
+- Oceania
 
-## How to use / reproduce
+For each continent, **five representative countries** were selected, and within each country **three major cities** (stations) were chosen — resulting in the final set of 77 stations.  
+This hierarchical structure enabled modular processing (one notebook per continent) and ensured balanced geographic coverage without overwhelming resources.
 
-1. Clone the repository
+Examples:
 
-```bash
-git clone https://github.com/SasySpanish/NOAA-GSOD-Global-Weather-Analysis-with-PySpark-on-Databricks.git
-```
-- Open Databricks (Community Edition or your organization workspace)
-- Import the .ipynb notebook located in the repository
-- Make sure the cluster has internet access (the NOAA S3 bucket is public – no credentials needed)
-- Run the cells sequentially
-- File reading is already protected with try/except to handle missing years/stations
-- Final cleaned & enriched data can be saved as Delta tables (path is configurable)
+- Europe → Italy (Bolzano, Rome Ciampino, Palermo), France (Paris CDG, Marseille, Brest), Germany, Spain, UK…
+- Asia → China (Beijing, Shanghai, Guangzhou), India (Delhi, Mumbai, Chennai), Japan, Russia, Indonesia…
+- Africa → South Africa (Cape Town, Johannesburg, Durban), Nigeria…
 
-## Main technologies & requirements
+### Storage in Delta Lake
 
-- Databricks cluster running Spark 3.4+ / Python 3.10+
-- Internet access (to read public NOAA S3 data)
-- Libraries used (installed via %pip inside the notebook when needed):
-- pyspark.sql
-- plotly, seaborn, matplotlib, pandas
+After initial cleaning and enrichment (adding continent, country, hemisphere, season), data was saved in **Delta Lake** format — first per continent, then unioned into a single global table.  
+Delta provided schema enforcement, ACID transactions, and efficient querying even on limited hardware, making iterative analysis fast and reliable.
+
+### Feature Engineering & Statistical Calculations
+
+Using PySpark aggregations, we computed a rich set of features by year, continent, country, and city:
+
+- Average / max / min temperature
+- Days >35°C, days <0°C (frost)
+- Precipitation days (>10 mm, >50 mm)
+- Diurnal temperature range (Tmax – Tmin)
+- Temperature variability (standard deviation)
+- Humidity %, wind speed averages
+- Extreme events (lightning, snow, hail from FRSHTT flags)
+- Anomalies vs 2000–2009 baseline per station
+
+These metrics form the basis for all downstream insights.
+
+### Visualizations with Seaborn & Matplotlib
+
+Final analysis and plots were created by converting Spark results to Pandas DataFrames and using **Seaborn** + **Matplotlib** for publication-quality charts.  
+Every plot avaiable [Here](results/img)
+Key visualizations include:
+
+- **Trend of annual mean temperature per continent** (2014–2024)  
+  ![Trend Temperatura Media Annuale per Continente 2014–2024](results/img/C.%20trend%20temperatura%20annuale%20continente%2014-24.png)
+
+- **Heatmap of average days with >10 mm rain** per continent and year  
+  ![Heatmap: Giorni medi >10mm per Continente e Anno](results/img/C.%20giorni%20di%20pioggia%2010mm%20continente%20x%20anno.png)
+
+- **Top 10 hottest cities in 2024**  
+  ![Top 10 Città Più Calde 2024](results/img/top10%20città%20più%20calde%202024.png)
 
 
-### Data license
-The NOAA GSOD dataset is public domain.
-.
+The visualizations reveal strong tropical influence on highest temperatures, elevated heavy-rain days in Europe and parts of South America/Asia, greater variability in Asia and North America, and a general pattern of stable-to-slightly-warming continental averages over the decade.
 
----
+All code runs end-to-end on free Databricks — from S3 ingestion to interactive Seaborn charts.
 
 ## Author
 Developed by **[Salvatore Spagnuolo](https://github.com/SasySpanish)**  
